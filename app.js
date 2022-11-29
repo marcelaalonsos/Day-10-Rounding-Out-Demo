@@ -14,6 +14,11 @@ const setup = async () => {
     app.use('/houses', houseRouter);
     app.use('/students', studentRouter);
 
+    app.use((req,res) => {res.status(404).send('Uh oh SpaghettiOs')});
+
+    app.use((err, req, res, next) => { console.log("I'm the new error middleware!", err);
+  res.send("Hello from middleware!")});
+
     // syncing the database before listening to the port!
     await db.sync();
     app.listen(PORT, () => {
@@ -23,5 +28,7 @@ const setup = async () => {
     console.log(e);
   }
 }
+
+
 
 setup();

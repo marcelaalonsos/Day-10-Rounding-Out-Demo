@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { Student } = require('../db');
+const { Student, House } = require('../db');
 
 router.get('/', async (req, res, next) => {
   try {
@@ -12,7 +12,7 @@ router.get('/', async (req, res, next) => {
 
 router.get('/:id', async (req, res, next) => {
   try {
-    const student = await Student.findByPk(req.params.id);
+    const student = await Student.findByPk(req.params.id, { include: {model: House, attributes: ['name', 'ghost']}});
     res.send(student);
   } catch(e) {
     next(e);
